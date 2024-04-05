@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bharat Miles</title>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/logo.png" />
+  <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+  integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+  .dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  .dialog-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  .close2 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
+  .scrollable {
+    max-height: 400px; /* Set a maximum height to enable scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+</style>
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./index.html" class="text-nowrap logo-img">
+            <img src="../assets/images/logos/logo.png" width="150" alt="" style="padding-left: 50px;"/>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Home</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="Demand_fleet.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-arrow-up-right"></i>
+                </span>
+                <span class="hide-menu">Demand Fleet</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#" aria-expanded="false">
+                <span>
+                  <i class="ti ti-cards"></i>
+                </span>
+                <span class="hide-menu">Payout</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#" aria-expanded="false">
+                <span>
+                  <i class="ti ti-location"></i>
+                </span>
+                <span class="hide-menu">Live EV Drivers</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="#" aria-expanded="false">
+                <span>
+                  <i class="ti ti-settings"></i>
+                </span>
+                <span class="hide-menu">Settings</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">AUTH</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-message"></i>
+                </span>
+                <span class="hide-menu">Messages</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-logout"></i>
+                </span>
+                <span class="hide-menu">Logout</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <div id="dialogBox" class="dialog hidden">
+        <div class="dialog-content">
+          <span class="close">&times;</span>
+          <div id="loadingDiv" class="hidden">Loading...</div>
+          <div id="myDiv" class="hidden" class="scrollable"><br>
+            <center<p>Due to unforeseen circumstances, specifically a severe thunderstorm in the Velachery area, our operations have been affected, causing delays in Delivery</p></center><br>
+          </div>
+        </div>
+      </div>
+      <!--  Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                <i class="ti ti-bell-ringing"></i>
+                <div class="notification bg-light-success rounded-circle" style="color: green !important;"></div>
+              </a>
+            </li>
+          </ul>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <a href="app.html" target="_blank" class="btn btn-primary">Get the App</a>
+              <div style="padding: 7px;"></div>
+              <a href="sample-page.html" class="btn btn-primary">Get an Estimate</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-mail fs-6"></i>
+                      <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        <!--  Row 1 -->
+        <div class="row">
+          <div class="col-lg-8 d-flex align-items-strech">
+            <div class="card w-100">
+              <div class="card-body">
+                <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                  <div class="mb-3 mb-sm-0">
+                    <h2 class="card-title fw-semibold" style="font-size: 1.5rem;">ORDERS FULFILLED</h2> 
+                  </div>
+                  <div>
+                    <select class="form-select">
+                      <option value="1">March 2023</option>
+                      <option value="2">April 2023</option>
+                      <option value="3">May 2023</option>
+                      <option value="4">June 2023</option>
+                    </select>
+                  </div>
+                </div><br>
+                <div id="options"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="row">
+              <div class="col-lg-12">
+                <!-- Yearly Breakup -->
+                <div class="card overflow-hidden">
+                  <div class="card-body p-4">
+                    <h5 class="card-title mb-9 fw-semibold">Cost Incurred</h5>
+                    <div class="row align-items-center">
+                      <div class="col-8">
+                        <h4 class="fw-semibold mb-3">₹ 3,15,358</h4>
+                        <div class="d-flex align-items-center mb-3">
+                          <span
+                            class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
+                            <i class="ti ti-arrow-up-left text-success"></i>
+                          </span>
+                          <p class="text-dark me-1 fs-3 mb-0">+23%</p>
+                          <p class="fs-3 mb-0">last year</p>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="d-flex justify-content-center">
+                          <!-- <div id="breakup"></div> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <!-- Yearly Breakup -->
+                <div class="card overflow-hidden">
+                  <div class="card-body p-4">
+                    <h5 class="card-title mb-9 fw-semibold">Average Distance / Delivery</h5>
+                    <div class="row align-items-center">
+                      <div class="col-8">
+                        <h4 class="fw-semibold mb-3">4.89KM</h4>
+                        <div class="d-flex align-items-center mb-3">
+                          <span
+                            class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
+                            <i class="ti ti-arrow-up-left text-success"></i>
+                          </span>
+                          <p class="text-dark me-1 fs-3 mb-0">+7%</p>
+                          <p class="fs-3 mb-0">last year</p>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="d-flex justify-content-center">
+                          <!-- <div id="breakup"></div> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <!-- Monthly Earnings -->
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row align-items-start" style="height: 150px;">
+                      <div class="col-8">
+                        <h5 class="card-title mb-9 fw-semibold"> Carbon Footprint Reduced </h5>
+                        <h4 class="fw-semibold mb-3">6,820</h4>
+                        <div class="d-flex align-items-center pb-1">
+                          <span
+                            class="me-1 rounded-circle bg-light-success  round-20 d-flex align-items-center justify-co ntent-center">
+                            <i class="ti ti-arrow-up-left text-success"></i>
+                          </span>
+                          <p class="text-dark me-1 fs-3 mb-0">+9%</p>
+                          <p class="fs-3 mb-0">last year</p>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="d-flex justify-content-end">
+                          <div>
+                            <img src="../assets/images/others/carbon.png" style="padding-left: 150px; width: 250px; padding-bottom: 40px;">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="dialogBox2" class="dialog hidden">
+          <div class="dialog-content">
+            <span class="close2">&times;</span>
+            <div id="loadingDiv2" class="hidden">Loading...</div>
+            <div id="myDiv2" class="hidden" class="scrollable"><br>
+              <center><img src="../assets/images/others/route.gif" /></center><br>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="card w-100">
+              <div class="card-body p-4">
+                <div class="mb-4">
+                  <h5 class="card-title fw-semibold">Fleet Monitoring</h5>
+                </div>
+                <ul class="timeline-widget mb-0 position-relative mb-n5">
+                  <li class="timeline-item d-flex position-relative overflow-hidden">
+                    <div class="timeline-time text-dark flex-shrink-0 text-end">23rd March</div>
+                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                      <span class="timeline-badge border-2 border border-primary flex-shrink-0 my-8"></span>
+                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
+                    </div>
+                    <div class="timeline-desc fs-3 text-dark mt-n1">Order dispatched to BCG Office, New Delhi</div>
+                  </li>
+                  <li class="timeline-item d-flex position-relative overflow-hidden">
+                    <div class="timeline-time text-dark flex-shrink-0 text-end">27rd March</div>
+                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                      <span class="timeline-badge border-2 border border-info flex-shrink-0 my-8"></span>
+                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
+                    </div>
+                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New Order Recorded <a
+                        id="toggleButton2" class="text-primary d-block fw-normal">#ML-3467</a>
+                    </div>
+                  </li>
+                  <li class="timeline-item d-flex position-relative overflow-hidden">
+                    <div class="timeline-time text-dark flex-shrink-0 text-end">30th March</div>
+                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                      <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
+                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
+                    </div>
+                    <div class="timeline-desc fs-3 text-dark mt-n1">Shipment has reached destination successfully</div>
+                  </li>
+                  <li class="timeline-item d-flex position-relative overflow-hidden">
+                    <div class="timeline-time text-dark flex-shrink-0 text-end">10th April</div>
+                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                      <span class="timeline-badge border-2 border border-warning flex-shrink-0 my-8"></span>
+                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
+                    </div>
+                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New Order Recorded <a
+                        href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3467</a>
+                    </div>
+                  </li>
+                  <li class="timeline-item d-flex position-relative overflow-hidden">
+                    <div class="timeline-time text-dark flex-shrink-0 text-end">17th April</div>
+                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                      <span class="timeline-badge border-2 border border-danger flex-shrink-0 my-8"></span>
+                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
+                    </div>
+                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New Arrival Recorded  <a
+                      href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3764</a>
+                    </div>
+                  </li>
+                  <li class="timeline-item d-flex position-relative overflow-hidden">
+                    <div class="timeline-time text-dark flex-shrink-0 text-end">23rd April</div>
+                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                      <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
+                    </div>
+                    <div class="timeline-desc fs-3 text-dark mt-n1">Payment Done</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 d-flex align-items-stretch">
+            <div class="card w-100">
+              <div class="card-body p-4">
+                <h5 class="card-title fw-semibold mb-4">Recent Transactions</h5>
+                <div class="table-responsive">
+                  <table class="table text-nowrap mb-0 align-middle">
+                    <thead class="text-dark fs-4">
+                      <tr>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Id</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Assigned Driver</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Pickup Address</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Drop Address</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Status</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Distance</h6>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">1</h6></td>
+                        <td class="border-bottom-0">
+                            <h6 class="fw-semibold mb-1">Ankit Kumar</h6>
+                            <span class="fw-normal">DL 08 HY 7674</span>                          
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">Pizza Hut, Model Town,<br> Delhi, NCT</p>
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">House No. 14, 24 Street, Sarojini Nagar,<br> Delhi, NCT</p>
+                        </td>
+                        <td class="border-bottom-0">
+                          <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-success rounded-3 fw-semibold">On time</span>
+                          </div>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0 fs-4">13.9KM</h6>
+                        </td>
+                      </tr> 
+                      <tr>
+                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">2</h6></td>
+                        <td class="border-bottom-0">
+                            <h6 class="fw-semibold mb-1">Rohan Gupta</h6>
+                            <span class="fw-normal">KA 12 US 2398</span>                          
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">Vanilla Bakery, Koramangla,<br> Bengaluru, Karnataka</p>
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">House no 23, XYZ Apartments, MG Road,<br> Bengaluru, Karnataka</p>
+                        </td>
+                        <td class="border-bottom-0">
+                          <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-success rounded-3 fw-semibold">On time</span>
+                          </div>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0 fs-4">14.5KM</h6>
+                        </td>
+                      </tr> 
+                      <tr>
+                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">3</h6></td>
+                        <td class="border-bottom-0">
+                            <h6 class="fw-semibold mb-1">Sanjay Joshi</h6>
+                            <span class="fw-normal">TN 67 ES 8478</span>                          
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">Subway, Dhandeeswaram,<br> Chennai, Tamil Nadu</p>
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">Villa No. 321, Rosewood Enclave, Velachery,<br> Chennai, Tamil Nadu</p>
+                        </td>
+                        <td class="border-bottom-0">
+                          <div class="d-flex align-items-center gap-2">
+                            <button id="toggleButton"  class="badge bg-danger rounded-3 fw-semibold">
+                            Late: 6min
+                            </button>
+                          </div>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0 fs-4">9.8KM</h6>
+                        </td>
+                      </tr>      
+                      <tr>
+                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">4</h6></td>
+                        <td class="border-bottom-0">
+                            <h6 class="fw-semibold mb-1">Aryan Malhotra</h6>
+                            <span class="fw-normal">MH 71 EK 6790</span>                          
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">Dominoes,<br> Koregaon, Pune, Maharashtra</p>
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">Apartment No. 987, Lotus Towers,<br> Koregaon Park, Pune, Maharashtra</p>
+                        </td>
+                        <td class="border-bottom-0">
+                          <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-success rounded-3 fw-semibold">On time</span>
+                          </div>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0 fs-4">8.9KM</h6>
+                        </td>
+                      </tr>                       
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <style>
+          * {
+            box-sizing: border-box;
+          }
+          
+
+          
+          .heading {
+            font-size: 25px;
+            margin-right: 25px;
+          }
+          
+          .fa {
+            font-size: 25px;
+          }
+          
+          .checked {
+            color: orange;
+          }
+          
+          /* Three column layout */
+          .side {
+            float: left;
+            width: 15%;
+            margin-top:10px;
+          }
+          
+          .middle {
+            margin-top:10px;
+            float: left;
+            width: 70%;
+          }
+          
+          /* Place text to the right */
+          .right {
+            text-align: right;
+          }
+          
+          /* Clear floats after the columns */
+          .row:after {
+            content: "";
+            display: table;
+            clear: both;
+          }
+          
+          /* The bar container */
+          .bar-container {
+            width: 100%;
+            background-color: #f1f1f1;
+            text-align: center;
+            color: white;
+            border-radius: 10px;
+          }
+          
+          /* Individual bars */
+          .bar-5 {width: 60%; height: 18px; background-color: #04AA6D; border-radius: 10px;}
+          .bar-4 {width: 30%; height: 18px; background-color: #2196F3; border-radius: 10px}
+          .bar-3 {width: 10%; height: 18px; background-color: #00bcd4; border-radius: 10px}
+          .bar-2 {width: 4%; height: 18px; background-color: #ff9800; border-radius: 10px}
+          .bar-1 {width: 2%; height: 18px; background-color: #f44336; border-radius: 10px}
+          
+          /* Responsive layout - make the columns stack on top of each other instead of next to each other */
+          @media (max-width: 400px) {
+            .side, .middle {
+              width: 100%;
+            }
+            .right {
+              display: none;
+            }
+          }
+          </style>
+
+        <div class="row">
+          <div class="col-sm-6 col-xl-3" style="width: 100%;">
+            <div class="card overflow-hidden rounded-2">
+                <div style="font-family: Arial;
+                padding: 20px;
+                display: inline;">
+                <span class="heading">User Rating</span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <p>4.1 average based on 254 reviews.</p>
+                <hr style="border:3px solid #f1f1f1">
+                <div class="row">
+                  <div class="side">
+                    <div>5 star</div>
+                  </div>
+                  <div class="middle">
+                    <div class="bar-container">
+                      <div class="bar-5"></div>
+                    </div>
+                  </div>
+                  <div class="side right">
+                    <div>150</div>
+                  </div>
+                  <div class="side">
+                    <div>4 star</div>
+                  </div>
+                  <div class="middle">
+                    <div class="bar-container">
+                      <div class="bar-4"></div>
+                    </div>
+                  </div>
+                  <div class="side right">
+                    <div>63</div>
+                  </div>
+                  <div class="side">
+                    <div>3 star</div>
+                  </div>
+                  <div class="middle">
+                    <div class="bar-container">
+                      <div class="bar-3"></div>
+                    </div>
+                  </div>
+                  <div class="side right">
+                    <div>15</div>
+                  </div>
+                  <div class="side">
+                    <div>2 star</div>
+                  </div>
+                  <div class="middle">
+                    <div class="bar-container">
+                      <div class="bar-2"></div>
+                    </div>
+                  </div>
+                  <div class="side right">
+                    <div>6</div>
+                  </div>
+                  <div class="side">
+                    <div>1 star</div>
+                  </div>
+                  <div class="middle">
+                    <div class="bar-container">
+                      <div class="bar-1"></div>
+                    </div>
+                  </div>
+                  <div class="side right">
+                    <div>2</div>
+                  </div>
+                  </div>
+                </div>
+                
+            
+                  <!-- Clients Review Section -->
+                  <div class="reviewSection" style="color: white;">
+          
+                  <!-- Clients Review-1 Section Starts from Here  -->
+                      <div class="reviewItem">
+                          <div class="top">
+                              <div class="clientImage">
+                                  <img src="../assets/images/profile/indian1.jpg" style="border-radius: 50%;" alt="">
+                                  <span>Raju Sheoran</span>
+                              </div>
+                              <ul>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-solid fa-star"></i></li> 
+                              </ul>
+                          </div>
+                          <article>
+                              <p class="review">I've tried several delivery services in the past, but none have matched the reliability and professionalism of this one. They understand the importance of timely deliveries, and they consistently exceed my expectations.</p>
+                              <p>Nov 23, 2023</p>
+                          </article>
+                      </div>
+          
+                  <!-- Clients Review-2 Section Starts from Here  -->
+                      <div class="reviewItem">
+                          <div class="top">
+                              <div class="clientImage">
+                                  <img src="../assets/images/profile/indian2.jpg" style="border-radius: 50%; alt="">
+                                  <span>Raju Sheoran</span>
+                              </div>
+                              <ul>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                              </ul>
+                          </div>
+                          <article>
+                              <p class="review">Using this delivery service has made my life so much easier. I no longer have to worry about running errands or missing deliveries. Their user-friendly app makes it simple to schedule and track deliveries, and their rates are competitive.</p>
+                              <p>Feb 14, 2024</p>
+                          </article>
+                      </div>
+          
+                  <!-- Clients Review-3 Section Starts from Here  -->
+                      <div class="reviewItem">
+                          <div class="top">
+                              <div class="clientImage">
+                                  <img src="../assets/images/profile/indian3.jpg" style="border-radius: 50%; alt="">
+                                  <span>Raju Sheoran</span>
+                              </div>
+                              <ul>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-solid fa-star"></i></li>
+                                  <li><i class="fa-regular fa-star"></i></li>
+                              </ul>
+                          </div>
+                          <article>
+                              <p class="review">"I can't say enough good things about this delivery service. Not only do they deliver quickly, but they also go above and beyond to ensure that my packages are handled with care. Their customer service team is responsive and helpful. </p>
+                              <p>Jan 02, 2024</p>
+                          </article>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.container {
+    width: 50%; 
+    color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 300px; /* Set a maximum height to enable scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.description {
+    text-align: center;
+    width: 43%;
+}
+
+.clientImage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.clientImage span {
+    margin-left: 10px;
+}
+
+.clientImage img {
+    width: 40px;
+}
+
+.reviewSection {
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.reviewItem {
+    width: 300px;
+    padding: 10px;
+    margin: 1rem;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: rgb(38, 103, 38);
+    border: 1px solid #10102a;
+    transition: all .2s linear;
+}
+
+.reviewItem:hover {
+    border-color: aqua;
+    transform: scale(1.01);
+    background-color: #090921;
+    box-shadow: 0 0px 5px 0px #cbc0c0;
+}
+
+.top {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.top ul {
+    display: flex;
+    list-style: none;
+}
+
+.top ul li {
+    padding-left: 4px;
+}
+
+article p {
+    font-size: 15px;
+    font-weight: 100;
+    margin-bottom: 1rem;
+    font-family: system-ui;
+}
+
+
+@media screen and (max-width:700px) {
+    .container {
+        height: auto;
+    }
+
+    .description {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width:375px) {
+    .reviewSection {
+        padding: 0;
+    }
+
+    .reviewItem {
+        width: 100%;
+    }
+
+    .clientImage {
+        margin-bottom: 0.6rem;
+    }
+
+    .top {
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+  </style>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+
+</html>
